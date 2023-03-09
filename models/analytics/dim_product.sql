@@ -10,3 +10,11 @@ WITH dim_product_source as(
   brand as brand_name
   FROM dim_product_source
 )
+
+,dim_product_cast_type as(
+  SELECT
+  CAST (product_key as int) AS product_key,
+  CAST (product_name as string) AS product_name,
+  CAST (brand_name as string) AS brand_name
+  FROM dim_product_rename_column
+)
