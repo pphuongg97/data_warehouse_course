@@ -18,3 +18,9 @@ WITH dim_product_source as(
   CAST (brand_name as string) AS brand_name
   FROM dim_product_rename_column
 )
+
+SELECT
+  product_key,
+  product_name,
+  brand_name
+  FROM dim_product_cast_type
