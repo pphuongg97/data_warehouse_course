@@ -30,6 +30,6 @@ sales_order_line_key
 , fact_line.product_key
 , fact_line.quantity * fact_line.unit_price AS gross_amount
 FROM fact_sales_order_line__cast_type AS fact_line
-LEFT JOIN `learn-dbt-379601.wide_world_importers_dwh_staging.stg_fact_sales_order` AS fact_header
+LEFT JOIN {{ ref('stg_fact_sales_order') }} AS fact_header
   ON fact_line.sales_order_key=fact_header.sales_order_key
 
