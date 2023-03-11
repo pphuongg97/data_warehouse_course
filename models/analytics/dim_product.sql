@@ -9,6 +9,7 @@ WITH dim_product__source as(
   , stock_item_name as product_name
   , brand as brand_name
   , supplier_id as supplier_key
+  , is_chiller_stock as is_chiller_stock
   FROM dim_product__source
 )
 
@@ -18,6 +19,7 @@ WITH dim_product__source as(
   , CAST (product_name as string) AS product_name
   , CAST (brand_name as string) AS brand_name
   , CAST (supplier_key as int) AS supplier_key
+  , CAST (is_chiller_stock as boolean) AS is_chiller_stock
   FROM dim_product__rename_column
 )
 
@@ -27,6 +29,7 @@ SELECT
   , dim_product.brand_name
   , dim_product.supplier_key
   , dim_supplier.supplier_name
+  , dim_product.is_chiller_stock
   FROM dim_product__cast_type AS dim_product
   LEFT JOIN {{ ref('dim_supplier') }} AS dim_supplier
   ON dim_product.supplier_key = dim_supplier.supplier_key
