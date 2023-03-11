@@ -31,5 +31,5 @@ dim_customer.customer_key
 FROM dim_customer_cast_type AS dim_customer
 LEFT JOIN {{ ref("stg_dim_customer_category") }} AS stg_dim_customer_category
 ON dim_customer.customer_category_key = stg_dim_customer_category.customer_category_key
-LEFT JOIN {{ ref("stg_buying_group")}} AS stg_dim_buying_group
+LEFT JOIN {{ ref("stg_dim_buying_group")}} AS stg_dim_buying_group
 ON dim_customer.buying_group_key = stg_dim_buying_group.buying_group_name
