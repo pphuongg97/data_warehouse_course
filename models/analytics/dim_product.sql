@@ -32,8 +32,10 @@ WITH dim_product__source as(
   , CASE
       WHEN is_chiller_stock is TRUE THEN 'Chiller Stock'
       WHEN is_chiller_stock is FALSE THEN 'Not Chiller Stock'
-      ELSE 'Undefined' END 
+      WHEN iss_chiller_stock is NULL THEN 'Undefined'
+      ELSE 'Unvalid' END 
     AS is_chiller_stock  
+  FROM dim_product__rename_column
 )
 
 SELECT
