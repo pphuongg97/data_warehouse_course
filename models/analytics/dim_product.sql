@@ -32,7 +32,7 @@ WITH dim_product__source as(
   , CASE
       WHEN is_chiller_stock is TRUE THEN 'Chiller Stock'
       WHEN is_chiller_stock is FALSE THEN 'Not Chiller Stock'
-      WHEN iss_chiller_stock is NULL THEN 'Undefined'
+      WHEN is_chiller_stock is NULL THEN 'Undefined'
       ELSE 'Unvalid' END 
     AS is_chiller_stock  
   FROM dim_product__rename_column
@@ -41,7 +41,7 @@ WITH dim_product__source as(
 SELECT
   dim_product.product_key
   , dim_product.product_name
-  , dim_product.brand_name
+  , COALESCE(dim_product.brand_name,'Undefined') As brand_name
   , dim_product.supplier_key
   , dim_supplier.supplier_name
   , dim_product.is_chiller_stock
