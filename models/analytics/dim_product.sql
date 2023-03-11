@@ -30,11 +30,11 @@ WITH dim_product__source as(
   , brand_name
   , supplier_key
   , CASE
-      WHEN is_chiller_stock is TRUE THEN is_chiller_stock 'Chiller Stock'
-      WHEN is_chiller_stock is FALSE THEN is_chiller_stock 'Not Chiller Stock'
-      ELSE 'Undefied'
-    END 
+      WHEN is_chiller_stock is TRUE THEN 'Chiller Stock'
+      WHEN is_chiller_stock is FALSE THEN 'Not Chiller Stock'
+      ELSE 'Undefined' END 
     AS is_chiller_stock  
+)
 
 SELECT
   dim_product.product_key
