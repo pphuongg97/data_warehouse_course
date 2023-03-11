@@ -23,7 +23,7 @@ FROM `vit-lam-data.wide_world_importers.sales__customers`
   FROM dim_customer__rename_column
 )
 
-, dim_customer__convert_boolean
+, dim_customer__convert_boolean AS(
 SELECT 
 *
 , CASE
@@ -33,6 +33,7 @@ SELECT
     ELSE 'Unvalid' END
   AS is_on_credit_hold
 FROM dim_customer__cast_type
+)
 
 SELECT
 dim_customer.customer_key
@@ -42,7 +43,7 @@ dim_customer.customer_key
 , stg_dim_customer_category.customer_category_name
 , stg_dim_buying_group.buying_group_name
 , dim_customer.is_on_credit_hold
-FROM dim_customer_cast_type AS dim_customer
+FROM dim_customer__convert_boolean AS dim_customer
 LEFT JOIN {{ ref("stg_dim_customer_category") }} AS stg_dim_customer_category
 ON dim_customer.customer_category_key = stg_dim_customer_category.customer_category_key
 LEFT JOIN {{ ref("stg_dim_buying_group")}} AS stg_dim_buying_group
