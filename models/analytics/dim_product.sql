@@ -5,7 +5,7 @@ WITH dim_product__source as(
 
 , dim_product__rename_column as(
   SELECT 
-  , stock_item_id as product_key
+  stock_item_id as product_key
   , stock_item_name as product_name
   , brand as brand_name
   , supplier_id as supplier_key
@@ -14,7 +14,7 @@ WITH dim_product__source as(
 
 ,dim_product__cast_type as(
   SELECT
-  , CAST (product_key as int) AS product_key
+  CAST (product_key as int) AS product_key
   , CAST (product_name as string) AS product_name
   , CAST (brand_name as string) AS brand_name
   , CAST (supplier_key as int) AS supplier_key
