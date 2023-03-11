@@ -17,7 +17,7 @@ FROM `vit-lam-data.wide_world_importers.sales__customers`
   CAST(customer_key AS INT) AS customer_key
   , CAST(customer_name AS STRING) AS customer_name
   , CAST(customer_category_key AS INT) AS customer_category_key
-  , CAST (buying_group_key AS FLOAT) AS buying_group_key
+  , CAST (buying_group_key AS INT) AS buying_group_key
   FROM dim_customer_rename_column
 )
 
