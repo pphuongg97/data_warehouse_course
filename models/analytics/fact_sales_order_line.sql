@@ -33,4 +33,3 @@ sales_order_line_key
 FROM fact_sales_order_line__cast_type AS fact_line
 LEFT JOIN {{ ref('stg_fact_sales_order') }} AS fact_header
   ON fact_line.sales_order_key=fact_header.sales_order_key
-
