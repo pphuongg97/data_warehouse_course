@@ -29,6 +29,7 @@ sales_order_line_key
 , fact_header.customer_key
 , fact_line.product_key
 , fact_header.picked_by_person_key
+, fact_header.full_name
 , fact_line.quantity * fact_line.unit_price AS gross_amount
 FROM fact_sales_order_line__cast_type AS fact_line
 LEFT JOIN {{ ref('stg_fact_sales_order') }} AS fact_header
