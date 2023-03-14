@@ -21,6 +21,9 @@ FROM stg_fact_sales_order__rename_column
 
 SELECT
 sales_order_key
-, customer_key
-, picked_by_person_key
-FROM stg_fact_sales_order__cast_type
+, fact_line.customer_key
+, fact_line.picked_by_person_key
+, fact_header.full_name
+FROM stg_fact_sales_order__cast_type AS fact_line
+LEFT JOIN {{ ref("dim_person")}} AS fact_header
+ON fact_line.picked_by_person_key = fact_header.person_key
