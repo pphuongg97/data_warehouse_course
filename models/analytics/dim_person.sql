@@ -22,4 +22,4 @@ SELECT
 person_key
 , full_name
 FROM dim_person__cast_type
-  
+
