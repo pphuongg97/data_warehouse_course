@@ -6,7 +6,7 @@ WITH fact_sales_order_line__source AS (
 , fact_sales_order_line__rename_column AS(
 SELECT 
   order_line_id as sales_order_line_key
-  ,order_id as sales_order_key
+  , order_id as sales_order_key
   , stock_item_id as product_key
   , quantity as quantity
   , unit_price as unit_price  
