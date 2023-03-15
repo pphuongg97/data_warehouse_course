@@ -8,6 +8,7 @@ WITH stg_fact_sales_order__source AS(
   order_id AS sales_order_key
   , customer_id AS customer_key
   , picked_by_person_id AS picked_by_person_key
+  , order_date AS order_date
   FROM stg_fact_sales_order__source
 )
 
@@ -16,6 +17,7 @@ WITH stg_fact_sales_order__source AS(
   CAST(sales_order_key AS INT) AS sales_order_key
   , CAST(customer_key AS INT) AS customer_key
   , CAST(picked_by_person_key AS INT) AS picked_by_person_key
+  , CAST(order_date AS DATE) AS order_date
 FROM stg_fact_sales_order__rename_column
 )
 
