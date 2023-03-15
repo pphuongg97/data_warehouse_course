@@ -18,16 +18,16 @@ FROM `vit-lam-data.wide_world_importers.application__people`
   FROM dim_person__rename_column
 )
 
-dim_person__add_undefined_record AS(
+, dim_person__add_undefined_record AS(
   SELECT
   person_key
   , full_name
 FROM dim_person__cast_type
 
 UNION ALL
-SELECT
-0 AS person_key
-, 'Undefined' AS full_name
+  SELECT
+  0 AS person_key
+  , 'Undefined' AS full_name
 )
 
 SELECT
