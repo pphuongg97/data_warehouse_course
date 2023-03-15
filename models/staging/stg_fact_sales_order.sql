@@ -22,7 +22,7 @@ FROM stg_fact_sales_order__rename_column
 SELECT
 sales_order_key
 , fact_line.customer_key
-, fact_line.picked_by_person_key
+, COALESCE(fact_line.picked_by_person_key,0) AS picked_by_person_key
 , fact_header.full_name AS full_name
 FROM stg_fact_sales_order__cast_type AS fact_line
 LEFT JOIN {{ ref("dim_person")}} AS fact_header
