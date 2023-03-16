@@ -28,9 +28,9 @@ sales_order_line_key
 , fact_line.sales_order_key
 , fact_header.customer_key
 , fact_line.product_key
-, fact_header.order_date
 , COALESCE(fact_header.picked_by_person_key,-1) AS picked_by_person_key
 , fact_header.full_name AS full_name
+, fact_header.order_date
 , fact_line.quantity * fact_line.unit_price AS gross_amount
 FROM fact_sales_order_line__cast_type AS fact_line
 LEFT JOIN {{ ref('stg_fact_sales_order') }} AS fact_header
