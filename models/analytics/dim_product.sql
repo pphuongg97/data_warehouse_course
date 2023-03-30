@@ -79,10 +79,10 @@ SELECT
   , COALESCE(stg_dim_color.color_name,'Undefined') AS color_name
 
   , dim_product.unit_package_type_key
-  , COALESCE(stg_dim_unit_package_type.unit_package_type_name, 'Undefined') AS unit_package_type_name
+  , COALESCE(stg_dim_unit_package_type.package_type_name, 'Undefined') AS unit_package_type_name
 
   , dim_product.outer_package_type_key
-  , COALESCE(stg_dim_outer_package_type.outer_package_type_name, 'Undefined') AS outer_package_type_name
+  , COALESCE(stg_dim_outer_package_type.package_type_name, 'Undefined') AS outer_package_type_name
 
   , dim_product.quantity_per_outer
 
