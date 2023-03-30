@@ -23,7 +23,7 @@ SELECT
 SELECT
   dim_city.city_key
   , dim_city.city_name
-  , dim_city.state_province_key
+  , dim_city.dstate_province_key
   , COALESCE(stg_dim_state_province.state_province_name, 'Unvalid') AS state_province_name
 FROM dim_city__cast_type AS dim_city
 LEFT JOIN {{ ref("stg_dim_state_province") }} AS stg_dim_state_province
