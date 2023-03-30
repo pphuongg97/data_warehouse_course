@@ -18,8 +18,8 @@ WITH dim_product__source AS(
   , typical_weight_per_unit AS typical_weight_per_unit
   , supplier_id AS supplier_key
   , color_id AS color_key
-  , unit_package_type_id AS unit_package_type_key
-  , outer_package_type_id AS outer_package_type_key
+  , unit_package_id AS unit_package_type_key
+  , outer_package_id AS outer_package_type_key
   , quantity_per_outer AS quantity_per_outer    
   FROM dim_product__source
 )
@@ -53,8 +53,8 @@ WITH dim_product__source AS(
       WHEN is_chiller_stock is FALSE THEN 'Not Chiller Stock'
       WHEN is_chiller_stock is NULL THEN 'Undefined'
       ELSE 'Unvalid' END 
-    AS is_chiller_stock  
-  FROM dim_product__rename_column
+    AS is_chiller_stock
+  FROM dim_product__cast_type
 )
 
 SELECT
@@ -71,11 +71,32 @@ SELECT
   , dim_product.tax_rate
   , dim_product.recommended_retail_price
   , dim_product.typical_weight_per_unit
-  
+
   , dim_product.supplier_key
-  , COALESCE(dim_supplier.supplier_name,'Unvalied') AS supplier_name
+  , COALESCE(dim_supplier.supplier_name,'Undefined') AS supplier_name
   
+  , dim_product.color_key
+  , COALESCE(stg_dim_color.color_name,'Undefined') AS color_name
+
+  , dim_product.unit_package_type_key
+  , COALESCE(stg_dim_unit_package_type.unit_package_type_name, 'Undefined') AS unit_package_type_name
+
+  , dim_product.outer_package_type_key
+  , COALESCE(stg_dim_outer_package_type.outer_package_type_name, 'Undefined') AS outer_package_type_name
+
+  , dim_product.quantity_per_outer
+
   FROM dim_product__convert_boolean AS dim_product
 
   LEFT JOIN {{ ref('dim_supplier') }} AS dim_supplier
   ON dim_product.supplier_key = dim_supplier.supplier_key
+
+  LEFT JOIN {{ ref('stg_dim_color') }} AS stg_dim_color
+  ON dim_product.color_key = stg_dim_color.color_key
+
+  LEFT JOIN {{ ref("stg_dim_package_type") }} AS stg_dim_unit_package_type
+  ON dim_product.unit_package_type_key = stg_dim_unit_package_type.package_type_key
+
+  LEFT JOIN {{ ref("stg_dim_package_type") }} AS stg_dim_outer_package_type
+  ON dim_product.outer_package_type_key = stg_dim_outer_package_type.package_type_key  
+
