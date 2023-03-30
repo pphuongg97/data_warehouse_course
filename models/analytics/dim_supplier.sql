@@ -56,13 +56,18 @@ dim_supplier.supplier_key
 , COALESCE (dim_city.city_name, 'Undefined') AS delivery_city_name
 
 FROM dim_supplier__cast_type AS dim_supplier
+
 LEFT JOIN {{ ref("stg_dim_supplier_category" ) }} AS stg_dim_supplier_category
 ON dim_supplier.supplier_category_key = stg_dim_supplier_category.supplier_category_key
+
 LEFT JOIN {{ ref("dim_person") }} AS dim_primary_contact_person
 ON dim_supplier.primary_contact_person_key = dim_primary_contact_person.person_key
+
 LEFT JOIN {{ ref("dim_person") }} AS dim_alternate_contact_person
 ON dim_supplier.alternate_contact_person_key = dim_alternate_contact_person.person_key
+
 LEFT JOIN {{ ref("stg_dim_delivery_method") }} AS stg_dim_delivery_method
 ON dim_supplier.delivery_method_key = stg_dim_delivery_method.delivery_method_key
+
 LEFT JOIN {{ ref("dim_city") }} AS dim_city
 ON dim_supplier.delivery_city_key = dim_city.city_key
