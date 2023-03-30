@@ -10,7 +10,7 @@ WITH dim_product__source AS(
   , barcode AS barcode
   , brand AS brand_name
   , size AS size
-  , is_chiller_stock AS is_chiller_stock
+  , is_chiller_stock AS is_chiller_stock_boolean
   , lead_time_days AS lead_time_days
   , unit_price AS unit_price
   , tax_rate AS tax_rate
@@ -20,7 +20,7 @@ WITH dim_product__source AS(
   , color_id AS color_key
   , unit_package_id AS unit_package_type_key
   , outer_package_id AS outer_package_type_key
-  , quantity_per_outer AS quantity_per_outer    
+  , quantity_per_outer AS quantity_per_outer
   FROM dim_product__source
 )
 
@@ -31,7 +31,7 @@ WITH dim_product__source AS(
   , CAST (barcode AS STRING) AS barcode
   , CAST (brand_name AS STRING) AS brand_name
   , CAST (size AS STRING) AS size
-  , CAST (is_chiller_stock AS BOOLEAN) AS is_chiller_stock
+  , CAST (is_chiller_stock_boolean AS BOOLEAN) AS is_chiller_stock_boolean
   , CAST (lead_time_days AS INT) AS lead_time_days
   , CAST (unit_price AS NUMERIC) AS unit_price
   , CAST (tax_rate AS NUMERIC) AS tax_rate
@@ -45,13 +45,13 @@ WITH dim_product__source AS(
   FROM dim_product__rename_column
 )
 
-,dim_product__convert_boolean AS(
+, dim_product__convert_boolean AS(
   SELECT
   *
   , CASE
-      WHEN is_chiller_stock is TRUE THEN 'Chiller Stock'
-      WHEN is_chiller_stock is FALSE THEN 'Not Chiller Stock'
-      WHEN is_chiller_stock is NULL THEN 'Undefined'
+      WHEN is_chiller_stock_boolean is TRUE THEN 'Chiller Stock'
+      WHEN is_chiller_stock_boolean is FALSE THEN 'Not Chiller Stock'
+      WHEN is_chiller_stock_boolean is NULL THEN 'Undefined'
       ELSE 'Unvalid' END 
     AS is_chiller_stock
   FROM dim_product__cast_type
@@ -88,10 +88,10 @@ SELECT
 
   FROM dim_product__convert_boolean AS dim_product
 
-  LEFT JOIN {{ ref('dim_supplier') }} AS dim_supplier
+  LEFT JOIN {{ ref("dim_supplier") }} AS dim_supplier
   ON dim_product.supplier_key = dim_supplier.supplier_key
 
-  LEFT JOIN {{ ref('stg_dim_color') }} AS stg_dim_color
+  LEFT JOIN {{ ref("stg_dim_color") }} AS stg_dim_color
   ON dim_product.color_key = stg_dim_color.color_key
 
   LEFT JOIN {{ ref("stg_dim_package_type") }} AS stg_dim_unit_package_type
