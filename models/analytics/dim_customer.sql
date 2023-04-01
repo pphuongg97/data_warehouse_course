@@ -194,7 +194,7 @@ ON dim_customer.delivery_method_key = stg_dim_delivery_method.delivery_method_ke
 
 
 LEFT JOIN {{ ref("dim_city") }} AS dim_delivery_city
-ON dim_customer.delivery_city_key = dim_city.city_key
+ON dim_customer.delivery_city_key = dim_delivery_city.city_key
 
 LEFT JOIN {{ ref("dim_city") }} AS dim_postal_city
 ON dim_customer.postal_city_key = dim_postal_city.city_key
