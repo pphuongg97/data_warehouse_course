@@ -87,7 +87,7 @@ dim_supplier.supplier_key
 , COALESCE (dim_alternate_contact_person.full_name,'Unvalid') AS alternate_contact_person_full_name
 
 , dim_supplier.delivery_method_key
-, COALESCE (stg_dim_delivery_method.delivery_method_name) AS delivery_method_name
+, COALESCE (stg_dim_delivery_method.delivery_method_name, 'Unvalid') AS delivery_method_name
 
 , dim_supplier.delivery_city_key
 , COALESCE (dim_city.city_name, 'Unvalid') AS delivery_city_name
