@@ -79,13 +79,13 @@ FROM dim_person__convert_boolean
   UNION ALL
   SELECT
   -1 AS person_key
-  , 'Error' AS full_name
-  , 'Error' AS preferred_name
-  , 'Error' AS is_system_user
-  , 'Error' AS is_salesperson
-  , 'Error' AS is_employee
-  , 'Error' AS phone_number
-  , 'Error' AS fax_number
+  , 'Unvalid' AS full_name
+  , 'Unvalid' AS preferred_name
+  , 'Unvalid' AS is_system_user
+  , 'Unvalid' AS is_salesperson
+  , 'Unvalid' AS is_employee
+  , 'Unvalid' AS phone_number
+  , 'Unvalid' AS fax_number
 )
 
 SELECT
