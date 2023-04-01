@@ -56,13 +56,13 @@ FROM `vit-lam-data.wide_world_importers.sales__customers`
     WHEN is_statement_sent_boolean IS TRUE THEN 'Statement Sent'
     WHEN is_statement_sent_boolean IS FALSE THEN 'Not Statement Sent'
     WHEN is_statement_sent_boolean IS NULL THEN 'Undefined'
-    ELSE 'Unvalid' END
+    ELSE 'Error' END
     AS is_statement_sent
 ,   CASE
     WHEN is_on_credit_hold_boolean IS TRUE THEN 'On Credit Hold'
     WHEN is_on_credit_hold_boolean IS FALSE THEN 'Not On Credit Hold'
     WHEN is_on_credit_hold_boolean IS NULL THEN 'Undefined'
-    ELSE 'Unvalid' END
+    ELSE 'Error' END
   AS is_on_credit_hold
 FROM dim_customer__cast_type
 )
