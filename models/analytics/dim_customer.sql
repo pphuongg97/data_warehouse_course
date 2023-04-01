@@ -166,7 +166,7 @@ dim_customer.customer_key
 , COALESCE(dim_bill_to_customer.customer_name) AS bill_to_customer_name
 
 , dim_customer.delivery_city_key
-, COALESCE(dim_city.city_name,'Unvalid') AS delivery_city_name
+, COALESCE(dim_delivery_city.city_name,'Unvalid') AS delivery_city_name
 
 , dim_customer.postal_city_key
 , COALESCE(dim_postal_city.city_name,'Unvalid') AS postal_city_name
@@ -193,7 +193,7 @@ ON dim_customer.delivery_method_key = stg_dim_delivery_method.delivery_method_ke
 
 
 
-LEFT JOIN {{ ref("dim_city") }} AS dim_city
+LEFT JOIN {{ ref("dim_city") }} AS dim_delivery_city
 ON dim_customer.delivery_city_key = dim_city.city_key
 
 LEFT JOIN {{ ref("dim_city") }} AS dim_postal_city
