@@ -99,11 +99,11 @@ WITH dim_product__source AS(
     UNION ALL
   SELECT
    -1 AS product_key
-  , 'Error' product_name
-  , 'Error' barcode
-  , 'Error' brand_name
-  , 'Error' size
-  , 'Error' is_chiller_stock
+  , 'Unvalid' product_name
+  , 'Unvalid' barcode
+  , 'Unvalid' brand_name
+  , 'Unvalid' size
+  , 'Unvalid' is_chiller_stock
   , -1 AS lead_time_days
   , -1 AS unit_price
   , -1 AS tax_rate
@@ -121,7 +121,7 @@ SELECT
   , dim_product.product_name
 
   , dim_product.barcode
-  , COALESCE(dim_product.brand_name, 'Undefined') AS brand_name
+  , COALESCE(dim_product.brand_name, 'Unvalid') AS brand_name
   , dim_product.size
   , dim_product.is_chiller_stock
 
@@ -132,16 +132,16 @@ SELECT
   , dim_product.typical_weight_per_unit
 
   , dim_product.supplier_key
-  , COALESCE(dim_supplier.supplier_name,'Undefined') AS supplier_name
+  , COALESCE(dim_supplier.supplier_name,'Unvalid') AS supplier_name
   
   , dim_product.color_key
-  , COALESCE(stg_dim_color.color_name,'Undefined') AS color_name
+  , COALESCE(stg_dim_color.color_name,'Unvalid') AS color_name
 
   , dim_product.unit_package_type_key
-  , COALESCE(stg_dim_unit_package_type.package_type_name, 'Undefined') AS unit_package_type_name
+  , COALESCE(stg_dim_unit_package_type.package_type_name, 'Unvalid') AS unit_package_type_name
 
   , dim_product.outer_package_type_key
-  , COALESCE(stg_dim_outer_package_type.package_type_name, 'Undefined') AS outer_package_type_name
+  , COALESCE(stg_dim_outer_package_type.package_type_name, 'Unvalid') AS outer_package_type_name
 
   , dim_product.quantity_per_outer
 
