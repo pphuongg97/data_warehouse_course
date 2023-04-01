@@ -168,8 +168,12 @@ dim_customer.customer_key
 , dim_customer.delivery_city_key
 , COALESCE(dim_delivery_city.city_name,'Unvalid') AS delivery_city_name
 
+, dim_delivery_city.state_province_key AS delivery_state_province_key
+, COALESCE(dim_delivery_city.state_province_name,'Unvalid') AS delivery_state_province_name
+
 , dim_customer.postal_city_key
 , COALESCE(dim_postal_city.city_name,'Unvalid') AS postal_city_name
+
 
 FROM dim_customer__add_undefined_record AS dim_customer
 
