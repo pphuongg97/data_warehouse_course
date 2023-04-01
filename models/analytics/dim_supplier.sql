@@ -32,6 +32,43 @@ FROM dim_supplier__source
   FROM dim_supplier__rename_column
 )
 
+, dim_supplier__add_undefined_record AS(
+ SELECT
+  supplier_key
+  , supplier_name
+  , phone_number
+  , fax_number
+  , supplier_category_key
+  , primary_contact_person_key
+  , alternate_contact_person_key
+  , delivery_method_key
+  , delivery_city_key
+ FROM dim_supplier__cast_type
+
+ UNION ALL
+ SELECT
+  0 AS supplier_key
+  , 'Unndefined' AS supplier_name
+  , 'Unndefined' AS phone_number
+  , 'Unndefined' AS fax_number
+  , 0 AS supplier_category_key
+  , 0 AS primary_contact_person_key
+  , 0 AS alternate_contact_person_key
+  , 0 AS delivery_method_key
+  , 0 AS delivery_city_key
+
+ UNION ALL
+ SELECT
+  -1 AS supplier_key
+  , 'Unvalid' AS supplier_name
+  , 'Unvalid' AS phone_number
+  , 'Unvalid' AS fax_number
+  , -1 AS supplier_category_key
+  , -1 AS primary_contact_person_key
+  , -1 AS alternate_contact_person_key
+  , -1 AS delivery_method_key
+  , -1 AS delivery_city_key
+)
 
 SELECT
 dim_supplier.supplier_key
@@ -41,21 +78,21 @@ dim_supplier.supplier_key
 , dim_supplier.fax_number
 
 , dim_supplier.supplier_category_key
-, COALESCE (stg_dim_supplier_category.supplier_category_name, 'Undefined') AS supplier_category_name
+, COALESCE (stg_dim_supplier_category.supplier_category_name, 'Unvalid') AS supplier_category_name
 
 , dim_supplier.primary_contact_person_key
-, COALESCE (dim_primary_contact_person.full_name,'Undefined') AS primary_contact_person_full_name
+, COALESCE (dim_primary_contact_person.full_name,'Unvalid') AS primary_contact_person_full_name
 
 , dim_supplier.alternate_contact_person_key
-, COALESCE (dim_alternate_contact_person.full_name,'Undefined') AS alternate_contact_person_full_name
+, COALESCE (dim_alternate_contact_person.full_name,'Unvalid') AS alternate_contact_person_full_name
 
 , dim_supplier.delivery_method_key
 , COALESCE (stg_dim_delivery_method.delivery_method_name) AS delivery_method_name
 
 , dim_supplier.delivery_city_key
-, COALESCE (dim_city.city_name, 'Undefined') AS delivery_city_name
+, COALESCE (dim_city.city_name, 'Unvalid') AS delivery_city_name
 
-FROM dim_supplier__cast_type AS dim_supplier
+FROM dim_supplier__add_undefined_record AS dim_supplier
 
 LEFT JOIN {{ ref("stg_dim_supplier_category" ) }} AS stg_dim_supplier_category
 ON dim_supplier.supplier_category_key = stg_dim_supplier_category.supplier_category_key
