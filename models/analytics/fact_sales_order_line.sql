@@ -52,10 +52,10 @@ sales_order_line_key
 , fact_line.tax_amount
 , fact_line.net_amount
 , fact_line.picked_quantity
-, COALESCE(fact_header.customer_key,'Unvalid') AS customer_key
-, COALESCE(fact_header.salesperson_person_key,'Unvalid') AS salesperson_person_key
-, COALESCE(fact_header.picked_by_person_key,'Unvalid') AS picked_by_person_key
-, COALESCE(fact_header.contact_person_key,'Unvalid') AS contact_person_key
+, COALESCE(fact_header.customer_key,-1) AS customer_key
+, COALESCE(fact_header.salesperson_person_key,-1) AS salesperson_person_key
+, COALESCE(fact_header.picked_by_person_key,-1) AS picked_by_person_key
+, COALESCE(fact_header.contact_person_key,-1) AS contact_person_key
 , fact_line.package_type_key
 , fact_header.order_date
 , fact_header.expected_delivery_date
