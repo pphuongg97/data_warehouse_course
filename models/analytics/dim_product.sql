@@ -57,6 +57,65 @@ WITH dim_product__source AS(
   FROM dim_product__cast_type
 )
 
+, dim_product__add_undefined_record AS(
+  SELECT
+  product_key
+  , product_name
+  , barcode
+  , brand_name
+  , size
+  , is_chiller_stock
+  , lead_time_days
+  , unit_price
+  , tax_rate
+  , recommended_retail_price
+  , typical_weight_per_unit
+  , supplier_key
+  , color_key
+  , unit_package_type_key
+  , outer_package_type_key
+  , quantity_per_outer
+  FROM dim_product__convert_boolean
+
+  UNION ALL
+  SELECT
+   0 AS product_key
+  , 'Undefined' product_name
+  , 'Undefined' barcode
+  , 'Undefined' brand_name
+  , 'Undefined' size
+  , 'Undefined' is_chiller_stock
+  , 0 AS lead_time_days
+  , 0 AS unit_price
+  , 0 AS tax_rate
+  , 0 AS recommended_retail_price
+  , 0 AS typical_weight_per_unit
+  , 0 AS supplier_key
+  , 0 AS color_key
+  , 0 AS unit_package_type_key
+  , 0 AS outer_package_type_key
+  , 0 AS quantity_per_outer
+
+    UNION ALL
+  SELECT
+   -1 AS product_key
+  , 'Error' product_name
+  , 'Error' barcode
+  , 'Error' brand_name
+  , 'Error' size
+  , 'Error' is_chiller_stock
+  , -1 AS lead_time_days
+  , -1 AS unit_price
+  , -1 AS tax_rate
+  , -1 AS recommended_retail_price
+  , -1 AS typical_weight_per_unit
+  , -1 AS supplier_key
+  , -1 AS color_key
+  , -1 AS unit_package_type_key
+  , -1 AS outer_package_type_key
+  , -1 AS quantity_per_outer
+)
+
 SELECT
   dim_product.product_key
   , dim_product.product_name
@@ -86,7 +145,7 @@ SELECT
 
   , dim_product.quantity_per_outer
 
-  FROM dim_product__convert_boolean AS dim_product
+  FROM dim_product__add_undefined_record AS dim_product
 
   LEFT JOIN {{ ref("dim_supplier") }} AS dim_supplier
   ON dim_product.supplier_key = dim_supplier.supplier_key
