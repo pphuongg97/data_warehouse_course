@@ -20,12 +20,32 @@ SELECT
   FROM dim_city__rename_column
 )
 
+, dim_city__add_undefined_record AS(
+  SELECT
+  city_key
+  , city_name
+  , state_province_key
+  FROM dim_city__cast_type
+
+  UNION ALL
+  SELECT
+  0 AS city_key
+  , 'Undefined' AS city_name
+  , 0 AS state_province_key
+
+  UNION ALL
+  SELECT
+  -1 AS city_key
+  , 'Error' AS city_name
+  , -1 AS state_province_key
+)
+
 SELECT
   dim_city.city_key
   , dim_city.city_name
   , dim_city.state_province_key
   , COALESCE(stg_dim_state_province.state_province_name, 'Undefined') AS state_province_name
-FROM dim_city__cast_type AS dim_city
+FROM dim_city__add_undefined_record AS dim_city
 
 LEFT JOIN {{ ref("stg_dim_state_province") }} AS stg_dim_state_province
 ON dim_city.state_province_key = stg_dim_state_province.state_province_key
