@@ -177,7 +177,6 @@ dim_customer.customer_key
 , dim_postal_city.city_key AS delivery_postal_state_province_key
 , COALESCE(dim_postal_city.state_province_name, 'Unvalid') AS delivery_postal_state_province_name
 
-
 FROM dim_customer__add_undefined_record AS dim_customer
 
 LEFT JOIN dim_customer__convert_boolean AS dim_bill_to_customer
@@ -197,8 +196,6 @@ ON dim_customer.alternate_contact_person_key = dim_alternate_contact_person.pers
 
 LEFT JOIN {{ ref("stg_dim_delivery_method") }} AS stg_dim_delivery_method
 ON dim_customer.delivery_method_key = stg_dim_delivery_method.delivery_method_key
-
-
 
 LEFT JOIN {{ ref("dim_city") }} AS dim_delivery_city
 ON dim_customer.delivery_city_key = dim_delivery_city.city_key
