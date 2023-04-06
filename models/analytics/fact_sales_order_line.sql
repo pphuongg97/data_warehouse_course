@@ -43,7 +43,11 @@ FROM fact_sales_order_line__source
 SELECT
 sales_order_line_key
 , fact_line.sales_order_key
-, COALESCE(fact_header.is_undersupply_backordered,'Unvalid') AS is_undersupply_backordered
+, FARM_FINGERPRINT(CONCAT(
+   COALESCE(fact_header.is_undersupply_backordered,'Unvalid')
+   , ','
+   , fact_line.package_type_key
+)) AS sales_order_line_indicator_key 
 , fact_line.product_key
 , fact_line.quantity
 , fact_line.unit_price
