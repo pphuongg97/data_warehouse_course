@@ -60,7 +60,7 @@ sales_order_line_key
 , COALESCE(fact_header.salesperson_person_key,-1) AS salesperson_person_key
 , COALESCE(fact_header.picked_by_person_key,-1) AS picked_by_person_key
 , COALESCE(fact_header.contact_person_key,-1) AS contact_person_key
-, fact_line.package_type_key
+
 , fact_header.order_date
 , fact_header.expected_delivery_date
 , fact_line.line_picking_completed_when
