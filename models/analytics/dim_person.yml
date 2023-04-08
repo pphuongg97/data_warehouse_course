@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: dim_person
+    columns:
+      - name: person_key
+        tests:
+          - unique
+          - not_null
+
+      - name: full_name
+        tests:
+          - not_null
+
+      - name: preferred_name
+        tests:
+          - not_null
+
+      - name: is_system_user
+        tests:
+          - not_null
+
+      - name: is_salesperson
+        tests:
+          - not_null
+
+      - name: is_employee
+        tests:
+          - not_null
+
+      - name: phone_number
+        tests:
+          - not_null
+
+      - name: fax_number
+        tests:
+          - not_null
