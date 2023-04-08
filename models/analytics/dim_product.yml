@@ -5,4 +5,82 @@ models:
     columns:
       - name: product_key
         tests:
+          - unique
           - not_null
+
+      - name: product_name
+        tests:
+          - not null
+
+      - name: barcode
+        tests:
+          - not null
+
+      - name: brand_name
+        tests:
+          - not null
+
+      - name: size
+        tests:
+          - not null
+
+      - name: is_chiller_stock
+        tests:
+          - not null
+
+
+      - name: lead_time_days
+        tests:
+          - not null
+
+      - name: unit_price
+        tests:
+          - not null
+
+      - name: tax_rate
+        tests:
+          - not null
+
+      - name: recommended_retail_price
+        tests:
+          - not null
+
+      - name: typical_weight_per_unit
+        tests:
+          - not null
+
+      - name: supplier_key
+        tests:
+          - not null
+
+      - name: supplier_name
+        tests:
+          - not null
+
+      - name: color_key
+        tests:
+          - not null
+
+      - name: color_name
+        tests:
+          - not null
+
+      - name: unit_package_type_key
+        tests:
+          - not null
+
+      - name: unit_package_type_name
+        tests:
+          - not null
+
+      - name: outer_package_type_key
+        tests:
+          - not null
+
+      - name: outer_package_type_name
+        tests:
+          - not null
+
+      - name: quantity_per_outer
+        tests:
+          - not null
