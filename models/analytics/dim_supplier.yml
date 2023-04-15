@@ -22,6 +22,7 @@ models:
 
       - name: supplier_category_key
         tests:
+          - unique
           - not_null
 
       - name: supplier_category_name
@@ -47,6 +48,9 @@ models:
       - name: delivery_method_key
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_delivery_method')
+              field: delivery_method_key
 
       - name: delivery_method_name
         tests:
@@ -55,6 +59,9 @@ models:
       - name: delivery_city_key
         tests:
           - not_null
+          - relationships:
+              to: ref('dim_city')
+              field: city_key
 
       - name: delivery_city_name
         tests:
