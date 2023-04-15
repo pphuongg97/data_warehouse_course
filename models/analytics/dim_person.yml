@@ -19,14 +19,20 @@ models:
       - name: is_system_user
         tests:
           - not_null
+          - accepted_values:
+              values: ['System User', 'Not System User']
 
       - name: is_salesperson
         tests:
           - not_null
+          - accepted_values:
+              values: ['Salesperson', 'Not Salesperson']
 
       - name: is_employee
         tests:
           - not_null
+          - accepted_values:
+              values: ['Employee', 'Not Employee']
 
       - name: phone_number
         tests:
