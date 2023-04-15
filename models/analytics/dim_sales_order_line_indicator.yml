@@ -11,14 +11,21 @@ models:
       - name: is_undersupply_backedorder_boolean
         tests:
           - not_null
+          - acctepted_values:
+              values: ['true', 'false']
 
       - name: is_undersupply_backedorder
         tests:
           - not_null
+          - acctepted_values:
+              values: ['Undersupply Backoerder', 'Not Undersupply Backoerder']
 
       - name: package_type_key
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_dim_package_type')
+              field: package_type_key
 
       - name: package_type_name
         tests:
