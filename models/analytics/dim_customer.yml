@@ -15,10 +15,15 @@ models:
       - name: is_statement_sent
         tests:
           - not_null
+          - accepted_values:
+              values: ['Statement Sent', 'Not Statement' ]
 
       - name: is_on_credit_hold
         tests:
           - not_null
+          - accepted_values:
+              values: ['On Credit Hold', 'Not On Credit Hold' ]
+
 
       - name: credit_limit
         tests:
@@ -47,6 +52,9 @@ models:
       - name: customer_category_key
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_dim_customer_category')
+              field: customer_category_key
 
       - name: customer_category_name
         tests:
@@ -55,6 +63,9 @@ models:
       - name: buying_group_key
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_dim_buying_group')
+              field: buying_group_key
 
       - name: buying_group_name
         tests:
@@ -79,6 +90,9 @@ models:
       - name: delivery_method_key
         tests:
           - not_null
+          - relationships:
+              to: ref('stg_delivery_method')
+              field: delivery_method_key
 
       - name: delivery_method_name
         tests:
