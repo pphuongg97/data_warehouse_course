@@ -18,7 +18,24 @@ WITH stg_dim_delivery_method__source AS(
   FROM stg_dim_delivery_method__rename_column
 )
 
+, stg_dim_delivery_method__add_undefined_record AS(
+  SELECT
+  delivery_method_key
+  , delivery_method_name
+  FROM stg_dim_delivery_method__cast_type
+
+  UNION ALL
+  SELECT
+    0 AS delivery_method_key
+    , 'Undefined' AS delivery_method_name
+
+  UNION ALL
+  SELECT
+   -1 AS delivery_method_key
+   , 'Unvalid' AS delivery_method_name
+)
+
 SELECT
 delivery_method_key
 , delivery_method_name
-FROM stg_dim_delivery_method__cast_type
+FROM stg_dim_delivery_method__add_undefined_record
