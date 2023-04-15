@@ -18,7 +18,24 @@ WITH stg_dim_state_province__source AS(
   FROM stg_dim_state_province__rename_column
 )
 
-SELECT
+, stg_dim_state_province__add_undefined_record AS(
+  SELECT
   state_province_key
   , state_province_name
   FROM stg_dim_state_province__cast_type
+
+  UNION ALL
+  SELECT
+    0 AS state_province_key
+    , 'Undefined' AS state_province_name
+  
+  UNION ALL
+  SELECT
+    -1 AS state_province_key
+    , 'Unvalid' AS state_province_name
+)
+
+SELECT
+  state_province_key
+  , state_province_name
+  FROM stg_dim_state_province__add_undefined_record
