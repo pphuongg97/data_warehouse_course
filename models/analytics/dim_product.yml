@@ -27,6 +27,8 @@ models:
       - name: is_chiller_stock
         tests:
           - not null
+          - accepted_values:
+              values: ['Chiller Stock', 'Not Chiller Stock']
 
 
       - name: lead_time_days
@@ -52,6 +54,9 @@ models:
       - name: supplier_key
         tests:
           - not null
+          - relationships:
+              to: ref('dim_supplier')
+              field: supplier_key
 
       - name: supplier_name
         tests:
@@ -60,6 +65,9 @@ models:
       - name: color_key
         tests:
           - not null
+          - relationships:
+              to: ref('stg_dim_color')
+              field: color_key
 
       - name: color_name
         tests:
@@ -68,6 +76,9 @@ models:
       - name: unit_package_type_key
         tests:
           - not null
+          - relationships:
+              to: ref('stg_dim_package_type')
+              field: package_type_key
 
       - name: unit_package_type_name
         tests:
