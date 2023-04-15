@@ -18,7 +18,24 @@ WITH stg_dim_color__source AS(
   FROM stg_dim_color__rename_column
 )
 
+, stg_dim_color__add_undefined_record AS(
+  SELECT
+    color_key
+    , color_name
+  FROM stg_dim_color__cast_type
+
+  UNION ALL
+  SELECT
+    0 AS color_key
+    , 'Undefined' AS color_name
+
+  UNION ALL
+  SELECT
+    -1 AS color_key
+    , 'Unvalid' AS color_name
+)
+
 SELECT
 color_key
 , color_name
-FROM stg_dim_color__cast_type
+FROM stg_dim_color__add_undefined_record
