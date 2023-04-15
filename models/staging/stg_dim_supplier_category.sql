@@ -18,7 +18,24 @@ WITH stg_dim_supplier_category__source AS(
   FROM stg_dim_supplier_category__rename_column
 )
 
+, stg_dim_supplier_category__add_undefined_record AS(
+  SELECT
+    supplier_category_key
+    , supplier_category_name
+    FROM stg_dim_supplier_category__cast_type
+
+  UNION ALL
+  SELECT
+    0 AS supplier_category_key
+    , 'Undefined' AS supplier_category_name
+  
+  UNION ALL
+  SELECT
+    -1 AS supplier_category_key
+    , 'Unvalid' AS supplier_category_name
+)
+
 SELECT
 supplier_category_key
 , supplier_category_name
-FROM stg_dim_supplier_category__cast_type
+FROM stg_dim_supplier_category__add_undefined_record
