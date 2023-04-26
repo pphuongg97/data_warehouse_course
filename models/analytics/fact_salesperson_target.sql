@@ -1,11 +1,12 @@
-WITH fact_salesperson_target AS(
+WITH fact_salesperson_target__from_target AS(
   SELECT
     year_month
   , salesperson_person_key
   , target_gross_amount
   FROM {{ ref('stg_fact_salesperson_target') }}
+)
 
-, fact_salesperson_target__actual_sales AS(
+, fact_salesperson_target__from_sales AS(
   SELECT
     CAST (DATE_TRUNC(order_date, MONTH) AS DATE) AS year_month
     , salesperson_person_key
