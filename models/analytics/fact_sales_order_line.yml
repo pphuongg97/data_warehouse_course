@@ -8,9 +8,112 @@ models:
           - unique
           - not_null
 
+      - name: sales_order_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_fact_sales_order')
+              field: sales_order_key
+
+      - name: is_undersupply_backordered
+        tests:
+          - not_null
+          - accepted_values:
+              values: [Undersupply Backordered, Not Undersupply Backordered]
+
+      - name: package_type_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_dim_package_type')
+              field: package_type_key
+
       - name: sales_order_line_indicator_key
         tests:
           - not_null
           - relationships:
               to: ref('dim_sales_order_line_indicator')
               field: sales_order_line_indicator_key
+
+      - name: product_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
+
+      - name: quantity
+        tests:
+          - custom_test_equal_sum:
+              compare_model: "`vit-lam-data.wide_world_importers.sales__orders`"
+              compare_column: "quantity"
+
+      - name: unit_price
+        tests:
+          - not_null
+
+      - name: gross_amount
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: "gross_amount = quantity * unit_price"
+
+      - name: tax_rate
+        tests:
+          - not_null
+
+      - name: tax_amount
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: "tax_amount = tax_rate * quantity * unit_price"
+
+      - name: net_amount
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: "net_amount = quantity * unit_price * (1 - tax_rate)"
+
+      - name: picked_quantity
+        tests:
+          - custom_test_equal_sum:
+              compare_model: "`vit-lam-data.wide_world_importers.sales__order_lines`"
+              compare_column: "picked_quantity"
+
+      - name: customer_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customer')
+              field: customer_key
+
+      - name: salesperson_person_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_salesperson_person')
+              field: salesperson_person_key
+
+      - name: picked_by_person_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_picked_by_person')
+              field: picked_by_person_key
+
+      - name: order_date
+        tests:
+          - dbt_utils.accepted_values:
+              min_value: " '2013-01-01' "
+              max_value: 'CURRENT_DATE'
+
+      - name: expected_delivery_date
+        tests:
+          - not_null
+
+      - name: line_picking_completed_when
+        tests:
+          - not_null
+
+      - name: sales_order_picking_completed_when
+        tests:
+          - not_null
+
+            
